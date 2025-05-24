@@ -1,0 +1,1 @@
+# AmplifyStorage-travelblog-demo
