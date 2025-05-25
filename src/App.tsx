@@ -1,16 +1,49 @@
 import './App.css'
+import { createBrowserRouter, Outlet, RouterProvider } from 'react-router';
+import NavBar from './components/NavBar';
+import Home from './components/Home';
+import Places from './components/Places';
+import CreatePlace from './components/CreatePlace';
+import PlacesDetails from './components/PlacesDetails';
+import Auth from './components/Auth';
 
-// import { Amplify } from 'aws-amplify';
-// import outputs from "../amplify_outputs.json";
-
-// Amplify.configure(outputs);
 
 function App() {
+  const router = createBrowserRouter([{
+    element: (
+      <>
+        <NavBar />
+        <Outlet />
+      </>
+    ),
+    children: [
+      {
+        path: "/",
+        element: <Home />
+      },
+      {
+        path: "/places",
+        element: <Places />
+      },
+      {
+        path: "/places/create",
+        element: <CreatePlace />
+      },
+      {
+        path: "/places/:id",
+        element: <PlacesDetails />
+      },
+      {
+        path: "/auth",
+        element: <Auth />
+      }
+    ]
+  }])
 
   return (
-    <>
-      <h1>Hello World</h1>
-    </>
+    <div className="wrapper">
+          <RouterProvider router={router} />
+    </div>
   )
 }
 

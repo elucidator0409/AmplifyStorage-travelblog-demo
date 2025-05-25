@@ -1,9 +1,14 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  /* padding: 2rem; */
   text-align: center;
 }
+
+.placeComponent {
+  border-bottom: 1px solid cornflowerblue
+}
+
 
 .logo {
   height: 6em;

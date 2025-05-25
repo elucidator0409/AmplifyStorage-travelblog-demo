@@ -1,11 +1,23 @@
 import { defineBackend } from '@aws-amplify/backend';
+import { imagesStorage } from './storage/resource';
+import { generateThumb } from './functions/resize/resource';
+import { LambdaDestination } from 'aws-cdk-lib/aws-s3-notifications';
+import { EventType } from 'aws-cdk-lib/aws-s3';
 import { auth } from './auth/resource';
 import { data } from './data/resource';
 
-/**
- * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
- */
-defineBackend({
+const backend = defineBackend({
+  imagesStorage,
+  generateThumb,
   auth,
-//  data,
+  data  
 });
+
+backend.imagesStorage.resources.bucket.addEventNotification(
+  EventType.OBJECT_CREATED_PUT,
+  new LambdaDestination(backend.generateThumb.resources.lambda),
+  {
+    prefix: 'originals/'
+  }
+
+)
